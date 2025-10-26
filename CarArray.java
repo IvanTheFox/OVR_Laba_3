@@ -1,29 +1,37 @@
 import java.time.Year;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class CarArray {
-    Car[] cars;
+    ArrayList<Car> cars;
+    static final int startLength = 10;
 
-    public CarArray() {
-        cars = new Car[10];
+    public CarArray(){
+        cars = new ArrayList<Car>();
+    }
+
+    public CarArray(RegistryNumberManager _Manager) {
+        cars = new ArrayList<Car>();
+        for (int i=0;i<startLength;i++){
+            cars.add(new Car(_Manager));
+        }
     }
 
     public void getCheapest() {
         int cheapestIndex = 0;
-        for (int i = 0; i < cars.length; i++) {
-            if (cars[i].price < cars[cheapestIndex].price) {
+        for (int i = 0; i < cars.size(); i++) {
+            if (cars.get(i).price < cars.get(cheapestIndex).price) {
                 cheapestIndex = i;
             }
         }
 
-        cars[cheapestIndex].printInfo();
+        cars.get(cheapestIndex).printInfo();
     }
 
     public void getSmallestMileage() {
         int smallestMileageIndex = -1;
-        for (int i = 0; i < cars.length; i++) {
-            if (Year.now().getValue() - cars[i].birthYear > 3) {
-                if (smallestMileageIndex == -1 || cars[smallestMileageIndex].mileage > cars[i].mileage) {
+        for (int i = 0; i < cars.size(); i++) {
+            if (Year.now().getValue() - cars.get(i).birthYear > 3) {
+                if (smallestMileageIndex == -1 || cars.get(smallestMileageIndex).mileage > cars.get(i).mileage) {
                     smallestMileageIndex = i;
                 }
             }
@@ -32,15 +40,13 @@ public class CarArray {
         if (smallestMileageIndex == -1) {
             System.out.println("No cars older than 3 years!");
         } else {
-            cars[smallestMileageIndex].printInfo();
+            cars.get(smallestMileageIndex).printInfo();
         }
     }
 
     public void sortByYear() {
-        Arrays.sort(cars, (c1, c2) -> Integer.compare(c1.birthYear, c2.birthYear));
-        for (Car car : cars) {
-            car.printInfo();
-        }
+        cars.sort((c1, c2) -> Integer.compare(c1.birthYear, c2.birthYear));
+        printAll();
     }
 
     public void getByRegistryNumber(String registryNumber) {
@@ -56,6 +62,7 @@ public class CarArray {
         if (!carFound) {
             System.out.print("Couldn't find a car with that registry number!");
         }
+
     }
 
     public void setField(String registryNumber, String fieldName, String value) {
@@ -126,7 +133,7 @@ public class CarArray {
             boolean operationSuccess = car.setRegistryNumber(value);
             if (!operationSuccess) {
                 if (car.regNumManager.isRegistryNumber(value)) {
-                    System.out.println("This registry number is busy!");
+                    System.out.println("This registry number is taken!");
                 } else {
                     System.out.println("This registry number is invalid!");
                 }
@@ -135,6 +142,12 @@ public class CarArray {
             }
         } else {
             System.out.println("Couldn't find such field!");
+        }
+    }
+    
+    public void printAll(){
+        for (Car car : cars){
+            car.printInfo();
         }
     }
 }

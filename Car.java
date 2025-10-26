@@ -19,18 +19,26 @@ public class Car {
         birthYear = Year.now().getValue();
         registryNumber = "A000AA";
     }
+    public Car(RegistryNumberManager _regnumManager) {
+        model = "Nissan Jhuk";
+        price = 0;
+        mileage = 0;
+        birthYear = Year.now().getValue();
+        regNumManager = _regnumManager;
+        registryNumber = regNumManager.generateRegistryNumber();
+    }
     public Car(RegistryNumberManager _regNumManager, String _model, int _price, int _mileage, int _birthYear, String _registryNumber) {
         regNumManager = _regNumManager;
         // Setting the registry number
         if (regNumManager.isRegistryNumber(_registryNumber)) {
             if (regNumManager.isRegistryNumberBusy(_registryNumber)) {
-                registryNumber = regNumManager.generateRegistryNumber(true);
-                System.out.println("This registry number is busy! Using " + registryNumber + " instead for " + _registryNumber);
+                registryNumber = regNumManager.generateRegistryNumber();
+                System.out.println("This registry number is taken! Using " + registryNumber + " instead for " + _registryNumber);
             } else {
                 registryNumber = _registryNumber;
             }
         } else {
-            registryNumber = regNumManager.generateRegistryNumber(true);
+            registryNumber = regNumManager.generateRegistryNumber();
             System.out.println("This registry's format is wrong! Using " + registryNumber + " instead for " + _registryNumber);
         }
         // Setting the model
