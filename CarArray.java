@@ -45,7 +45,7 @@ public class CarArray {
     }
 
     public void sortByYear() {
-        cars.sort((c1, c2) -> Integer.compare(c1.birthYear, c2.birthYear));
+        cars.sort((c1, c2) -> Integer.compare(c2.birthYear, c1.birthYear));
         printAll();
     }
 

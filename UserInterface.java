@@ -128,7 +128,6 @@ public class UserInterface {
     private void setField(String number){
         try{
             String[] input = getNextString("Введите название свойства, которое хотите изменить, и через пробел - новое значение:").split(":");
-            System.out.println(input.length);
             if (input.length!=2){
                 System.out.println("Ввод неправильный!\n");
                 return;

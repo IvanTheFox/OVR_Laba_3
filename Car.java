@@ -1,4 +1,5 @@
 import java.time.Year;
+import java.util.Random;
 
 public class Car {
     String model;
@@ -7,6 +8,7 @@ public class Car {
     int birthYear;
     String registryNumber;
 
+    Random randomizer = new Random();
     RegistryNumberManager regNumManager;
 
     static String defaultModel = "Nissan Jhuk";
@@ -21,9 +23,9 @@ public class Car {
     }
     public Car(RegistryNumberManager _regnumManager) {
         model = "Nissan Jhuk";
-        price = 0;
-        mileage = 0;
-        birthYear = Year.now().getValue();
+        price = randomizer.nextInt(100000,10000000);
+        mileage = randomizer.nextInt(100000);
+        birthYear = randomizer.nextInt(firstCarBirthYear,Year.now().getValue()+1);
         regNumManager = _regnumManager;
         registryNumber = regNumManager.generateRegistryNumber();
     }
@@ -69,6 +71,8 @@ public class Car {
         } else if (_birthYear > Year.now().getValue()) {
             birthYear = Year.now().getValue();
             System.out.println("That year has not come yet! Using " + String.valueOf(Year.now().getValue()) + " instead for " + registryNumber);
+        } else {
+            birthYear=_birthYear;
         }
     }
 
