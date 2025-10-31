@@ -1,24 +1,37 @@
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+/**
+ * Класс, представляющий менеджер регистрационных номеров машин
+ */
 public class RegistryNumberManager {
     String defaultRegistry;
     String registryRegex;
     ArrayList<String> busyRegistryNumbers;
     
-
-    public RegistryNumberManager(){
+    /**
+     * Конструктор по умолчанию
+     */
+    public RegistryNumberManager() {
         defaultRegistry = "A000AA";
         registryRegex = "[ABEKMHOPCTYX]\\d{3}[ABEKMHOPCTYX]{2}";
         busyRegistryNumbers = new ArrayList<String>();
     }
 
+    /**
+     * Проверка формата регистрационного номера
+     * @param value - проверямый регистрационный номер
+     * @return - соответствие регистрационного номера формату
+     */
     public boolean isRegistryNumber(String value) {
         return Pattern.matches(registryRegex, value);
     }
-
+    /**
+     * Проверка, занят ли регистрационный номер
+     * @param value - проверяемый регистрационный номер
+     * @return - статус занятости
+     */
     public boolean isRegistryNumberBusy(String value) {
-        //??
         boolean isBusy = false;
         for (String rn : busyRegistryNumbers) {
             if (rn.equals(value)) {
@@ -28,7 +41,10 @@ public class RegistryNumberManager {
         }
         return isBusy;
     }
-
+    /**
+     * Генерирует новый свободный регистрационный номер
+     * @return - новый регистрационный номер
+     */
     public String generateRegistryNumber() {
         String[] letters = {"A", "B", "E", "K", "M", "H", "O", "P", "C", "T", "Y", "X"};
         int[] bases = {letters.length, 10, 10, 10, letters.length, letters.length};

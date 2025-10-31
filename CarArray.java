@@ -1,14 +1,23 @@
 import java.time.Year;
 import java.util.ArrayList;
 
+/**
+ * Класс, представляющий список машин
+ */
 public class CarArray {
     ArrayList<Car> cars;
     static final int startLength = 10;
 
+    /**
+     * Конструктор по умолчанию
+     */
     public CarArray(){
         cars = new ArrayList<Car>();
     }
-
+    /**
+     * Конструктор, привязывающий менеджер регистрационных номеров к списку
+     * @param _Manager
+     */
     public CarArray(RegistryNumberManager _Manager) {
         cars = new ArrayList<Car>();
         for (int i=0;i<startLength;i++){
@@ -16,6 +25,9 @@ public class CarArray {
         }
     }
 
+    /**
+     * Получение самой дешёвой машины
+     */
     public void getCheapest() {
         int cheapestIndex = 0;
         for (int i = 0; i < cars.size(); i++) {
@@ -23,10 +35,11 @@ public class CarArray {
                 cheapestIndex = i;
             }
         }
-
         cars.get(cheapestIndex).printInfo();
     }
-
+    /**
+     * Получение машины с самым маленьким пробегом, старее 3 лет
+     */
     public void getSmallestMileage() {
         int smallestMileageIndex = -1;
         for (int i = 0; i < cars.size(); i++) {
@@ -43,12 +56,10 @@ public class CarArray {
             cars.get(smallestMileageIndex).printInfo();
         }
     }
-
-    public void sortByYear() {
-        cars.sort((c1, c2) -> Integer.compare(c2.birthYear, c1.birthYear));
-        printAll();
-    }
-
+    /**
+     * Получение машины по регистрационному номеру
+     * @param registryNumber
+     */
     public void getByRegistryNumber(String registryNumber) {
         boolean carFound = false;
         for (Car car : cars) {
@@ -62,9 +73,22 @@ public class CarArray {
         if (!carFound) {
             System.out.print("Couldn't find a car with that registry number!");
         }
-
     }
 
+    /**
+     * Сортировка машин по году выпуска
+     */
+    public void sortByYear() {
+        cars.sort((c1, c2) -> Integer.compare(c2.birthYear, c1.birthYear));
+        printAll();
+    }
+
+    /**
+     * Изменение свойтв машины из списка
+     * @param registryNumber - регистрационный номер машины
+     * @param fieldName - название свойства
+     * @param value - значение свойства
+     */
     public void setField(String registryNumber, String fieldName, String value) {
         // Looking for a car with provided registry number
         boolean carFound = false;
@@ -145,6 +169,9 @@ public class CarArray {
         }
     }
     
+    /**
+     * Вывод информации о всех машинах в списке
+     */
     public void printAll(){
         for (Car car : cars){
             car.printInfo();

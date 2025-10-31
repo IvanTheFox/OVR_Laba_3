@@ -1,12 +1,18 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Класс, представляющий интерфейс пользователя
+ */
 public class UserInterface {
     String command;
     ArrayList<String> args;
     CarArray cars;
     RegistryNumberManager manager;
 
+    /**
+     * Коструктор по умолчанию
+     */
     public UserInterface() {
         command = "";
         args = new ArrayList<String>();
@@ -14,9 +20,13 @@ public class UserInterface {
         cars=new CarArray(manager);
     }
 
+    /**
+     * Обработка введённой пользователем комманды
+     * @param command - комманда, введённая пользователем
+     * @return - ввёл ли пользователь комманду выхода из программы
+     */
     private boolean parseCommand(int command) {
-        
-        switch (command){
+        switch (command) {
             case 1:
                 cars.printAll();
                 return true;
@@ -41,10 +51,15 @@ public class UserInterface {
             default:
                 System.out.println("Выберите указанную на экране команду!\n");
                 return true;
-            }
-        
+        }
     }
 
+    /**
+     * Дальнейшая обработка комманды взаимодействия с машинами
+     * @param command
+     * @param number
+     * @return
+     */
     private boolean parseCommand6(int command, String number) {
         switch(command){
             case 1:
@@ -61,9 +76,12 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Меню комманды взаимодействия с машинами
+     */
     private void initializeCommand6(){
         while (true){
-            String number = getNextString("Введите регистрационный номер:");
+            String number = getNextString("Введите регистрационный номер: ");
             if (manager.isRegistryNumber(number)){
                 boolean continue6 = true;
                 while (continue6){
@@ -84,6 +102,10 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Функция инициализации интерфейса пользователя
+     * @return - ввёл ли пользователь комманду выхода из программы
+     */
     public boolean initializeMain() {
         try{
             System.out.println("Бригада №3: Медведев Михаил, Шепелев Иван\n"+
@@ -109,6 +131,11 @@ public class UserInterface {
         }
     }
     
+    /**
+     * Получение ввода пользователя
+     * @param text - текст перед полем ввода
+     * @return - введённая пользователем строка
+     */
     private String getNextString(String text) {
         String input;
         Scanner scanner = new Scanner(System.in);
@@ -125,17 +152,24 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Изменение своства машины
+     * @param number - регистрационный номер машины
+     */
     private void setField(String number){
-        try{
+        try {
             String[] input = getNextString("Введите название свойства, которое хотите изменить, и через пробел - новое значение:").split(":");
             if (input.length!=2){
                 System.out.println("Ввод неправильный!\n");
                 return;
             }
             cars.setField(number, input[0], input[1]);
-        }catch(Exception e){}
+        } catch(Exception e) {}
     }
 
+    /**
+     * Создание новой машины
+     */
     private void setNewCar(){
         try{
             String[] input = getNextString("Введите модель, цену, пробег, год производства и регистрационный номер машины:\n").split(":");
@@ -144,6 +178,8 @@ public class UserInterface {
                 return;
             }
             cars.cars.add(new Car(manager, input[0], Integer.parseInt(input[1]), Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]));
-        }catch(Exception e){System.out.println("Ввод неправильный!\n");}
+        } catch(Exception e) {
+            System.out.println("Ввод неправильный!\n");
+        }
     }
 }

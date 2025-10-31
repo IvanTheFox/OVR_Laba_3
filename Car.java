@@ -1,6 +1,9 @@
 import java.time.Year;
 import java.util.Random;
 
+/**
+ * Класс, представляющий машину, содержащий её описание.
+ */
 public class Car {
     String model;
     int price;
@@ -21,17 +24,30 @@ public class Car {
         birthYear = Year.now().getValue();
         registryNumber = "A000AA";
     }
-    public Car(RegistryNumberManager _regnumManager) {
+    /**
+     * Конструктор для создания машины, привязанной к заданному менеджеру регистрационных номеров, с произвольным регистрационным номером
+     * @param _regnumManager - менеджер регистрационных номеров, к которому привязывается машина
+     */
+    public Car(RegistryNumberManager _regNumManager) {
         model = "Nissan Jhuk";
         price = randomizer.nextInt(100000,10000000);
         mileage = randomizer.nextInt(100000);
         birthYear = randomizer.nextInt(firstCarBirthYear,Year.now().getValue()+1);
-        regNumManager = _regnumManager;
+        regNumManager = _regNumManager;
         registryNumber = regNumManager.generateRegistryNumber();
     }
+    /**
+     * Конструктор для создания машины с заданными свойтсвами
+     * @param _regNumManager - менеджер регистрационных номеров, к которому привязывается машина
+     * @param _model - модель машины
+     * @param _price - цена машины
+     * @param _birthYear - год выпуска машины
+     * @param _registryNumber - регистрационный номер машины
+     */
     public Car(RegistryNumberManager _regNumManager, String _model, int _price, int _mileage, int _birthYear, String _registryNumber) {
+        // Привязка к менеджеру регистрационных номеров
         regNumManager = _regNumManager;
-        // Setting the registry number
+        // Регистрационный номер
         if (regNumManager.isRegistryNumber(_registryNumber)) {
             if (regNumManager.isRegistryNumberBusy(_registryNumber)) {
                 registryNumber = regNumManager.generateRegistryNumber();
@@ -43,28 +59,28 @@ public class Car {
             registryNumber = regNumManager.generateRegistryNumber();
             System.out.println("This registry's format is wrong! Using " + registryNumber + " instead for " + _registryNumber);
         }
-        // Setting the model
+        // Модель
         if (_model.equals("")) {
             _model = defaultModel;
             System.out.println("Model name can not be empty! Using " + defaultModel + " instead for " + registryNumber);
         } else {
             model = _model;
         }
-        // Setting the price
+        // Цена
         if (_price >= 0) {
             price = _price;
         } else {
             price = 0;
             System.out.println("Price can not be negative! Using 0 instead for " + registryNumber);
         }
-        // Setting the mileage
+        // Пробег
         if (_mileage >= 0) {
             mileage = _mileage;
         } else {
             mileage = 0;
             System.out.println("Mileage can not be negative! Using 0 instead for " + registryNumber);
         }
-        // Setting the birth year
+        // Год выпуска
         if (_birthYear < firstCarBirthYear) {
             birthYear = firstCarBirthYear;
             System.out.println("Cars did not exist then! Using " + String.valueOf(firstCarBirthYear) + " instead for " + registryNumber);
@@ -75,7 +91,11 @@ public class Car {
             birthYear=_birthYear;
         }
     }
-
+    /**
+     * Задаёт новую модель машины
+     * @param value - новая модель машины
+     * @return - успех операции
+     */
     public boolean setModel(String value) {
         if (value.equals("")) {
             return false;
@@ -83,6 +103,11 @@ public class Car {
         model = value; 
         return true;
     }
+    /**
+     * Задаёт новую цену машины
+     * @param value - новая цена машины
+     * @return - успех операции
+     */
     public boolean setPrice(int value) {
         if (value < 0) {
             return false;
@@ -90,6 +115,11 @@ public class Car {
         price = value;
         return true;
     }
+    /**
+     * Задаёт новый пробег машины
+     * @param value - новый пробег машины
+     * @return - успех операции
+     */
     public boolean setMileage(int value) {
         if (value < 0) {
             return false;
@@ -97,6 +127,11 @@ public class Car {
         mileage = value;
         return true;
     }
+    /**
+     * Задаёт новую дату выпуска машины
+     * @param value - новая дата выпуска машины
+     * @return - успех операции
+     */
     public boolean setBirthYear(int value) {
         if (value < firstCarBirthYear || value > Year.now().getValue()) {
             return false;
@@ -104,6 +139,11 @@ public class Car {
         birthYear = value;
         return true;
     }
+    /**
+     * Задаёт новый регистрационный номер машины
+     * @param value - новый регистрационный номер машины
+     * @return - успех операции
+     */
     public boolean setRegistryNumber(String value) {
         if (!regNumManager.isRegistryNumber(value) || regNumManager.isRegistryNumberBusy(value)) {
             return false;
@@ -111,7 +151,9 @@ public class Car {
         registryNumber = value;
         return true;
     }
-
+    /**
+     * Выводит информацию о машине в консоль
+     */
     public void printInfo() {
         System.out.printf("%s %d yr.\n\tPrice: %d\n\tMileage: %d\n\tRegistry number: %s\n", model, birthYear, price, mileage, registryNumber);
     }
