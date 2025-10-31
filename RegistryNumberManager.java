@@ -18,7 +18,6 @@ public class RegistryNumberManager {
     }
 
     public boolean isRegistryNumberBusy(String value) {
-        //??
         boolean isBusy = false;
         for (String rn : busyRegistryNumbers) {
             if (rn.equals(value)) {
