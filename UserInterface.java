@@ -82,7 +82,7 @@ public class UserInterface {
     private void initializeCommand6(){
         while (true){
             String number = getNextString("Введите регистрационный номер: ");
-            if (manager.isRegistryNumber(number)){
+            if (manager.isRegistryNumber(number)&&manager.isRegistryNumberBusy(number)){
                 boolean continue6 = true;
                 while (continue6){
                     try{
@@ -97,7 +97,7 @@ public class UserInterface {
                 }
                 break;
             } else {
-                System.out.println("Вы ввели не регистрационный номер!\n");
+                System.out.println("Вы ввели не регистрационный номер или такой машины не существует!\n");
             }
         }
     }
@@ -142,7 +142,7 @@ public class UserInterface {
         System.out.print(text);
         try {
             if (scanner.hasNext()) {
-                input = scanner.next();
+                input = scanner.nextLine();
             } else {
                 throw new Exception();
             }        
@@ -158,7 +158,7 @@ public class UserInterface {
      */
     private void setField(String number){
         try {
-            String[] input = getNextString("Введите название свойства, которое хотите изменить, и через пробел - новое значение:").split(":");
+            String[] input = getNextString("Введите название свойства, которое хотите изменить, и через двоеточие - новое значение:").split(":");
             if (input.length!=2){
                 System.out.println("Ввод неправильный!\n");
                 return;
@@ -172,12 +172,13 @@ public class UserInterface {
      */
     private void setNewCar(){
         try{
-            String[] input = getNextString("Введите модель, цену, пробег, год производства и регистрационный номер машины:\n").split(":");
+            String[] input = getNextString("Введите модель, цену, пробег, год производства и регистрационный номер с кодом региона в трехзначном виде машины через двоеточие:\n").split(":");
             if (input.length!=5){
                 System.out.println("Ввод неправильный!\n");
                 return;
             }
             cars.cars.add(new Car(manager, input[0], Integer.parseInt(input[1]), Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]));
+            System.out.println("Машина создана!\n");
         } catch(Exception e) {
             System.out.println("Ввод неправильный!\n");
         }

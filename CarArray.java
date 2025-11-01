@@ -60,10 +60,10 @@ public class CarArray {
      * Получение машины по регистрационному номеру
      * @param registryNumber
      */
-    public void getByRegistryNumber(String registryNumber) {
+    public void getByRegistryNumber(String _registryNumber) {
         boolean carFound = false;
         for (Car car : cars) {
-            if (registryNumber.equals(registryNumber)) {
+            if (car.registryNumber.equals(_registryNumber)) {
                 carFound = true;
                 car.printInfo();
                 break;

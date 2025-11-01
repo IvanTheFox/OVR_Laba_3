@@ -14,11 +14,12 @@ public class Car {
     Random randomizer = new Random();
     RegistryNumberManager regNumManager;
 
-    static String defaultModel = "Nissan Jhuk";
+    static String defaultModel = "Nissan Juke";
     static int firstCarBirthYear = 1886;
+    static final int firstNissanJukeYear = 2010;  
 
     public Car() {
-        model = "Nissan Jhuk";
+        model = defaultModel;
         price = 0;
         mileage = 0;
         birthYear = Year.now().getValue();
@@ -29,10 +30,10 @@ public class Car {
      * @param _regnumManager - менеджер регистрационных номеров, к которому привязывается машина
      */
     public Car(RegistryNumberManager _regNumManager) {
-        model = "Nissan Jhuk";
+        model = defaultModel;
         price = randomizer.nextInt(100000,10000000);
         mileage = randomizer.nextInt(100000);
-        birthYear = randomizer.nextInt(firstCarBirthYear,Year.now().getValue()+1);
+        birthYear = randomizer.nextInt(firstNissanJukeYear,Year.now().getValue()+1);
         regNumManager = _regNumManager;
         registryNumber = regNumManager.generateRegistryNumber();
     }
